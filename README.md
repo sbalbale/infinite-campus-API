@@ -5,8 +5,6 @@
 
 [(full docs here)](https://tonyzimbinski.github.io/infinite-campus/User.html)
 
-## This project (although in a stable state) is in *desperate* need of new maintainers!!! If you are interested in testing new PR's please [contact](mailto:azimbin@gmail.com) me :-)
-
 ### Super easy to use!
 
 ```JavaScript
@@ -47,7 +45,7 @@ user.on('error', (err) => {
 
 ```
 
-## [READ THE FULL DOCUMENTATION HERE](https://qwazwsx.xyz/infinite-campus/User.html)
+## [READ THE FULL DOCUMENTATION HERE](https://tonyzimbinski.github.io/infinite-campus/User.html)
 
 
 ## Disclaimer

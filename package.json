@@ -1,6 +1,6 @@
 {
-  "name": "infinite-campus",
-  "version": "3.1.2",
+  "name": "infinite-campus-api",
+  "version": "1.0.0",
   "description": "📚 unofficial API for Infinite Campus written in Node JS",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qwazwsx/infinite-campus.git"
+    "url": "git+https://github.com/sbalbale/infinite-campus-API"
   },
   "keywords": [
     "infinite-campus",
@@ -20,12 +20,12 @@
     "grades",
     "API"
   ],
-  "author": "qwazwsx (https://github.com/qwazwsx)",
+  "author": "sbalbale (https://github.com/sbalbale)",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/qwazwsx/infinite-campus/issues"
+    "url": "https://github.com/sbalbale/infinite-campus-API/issues"
   },
-  "homepage": "https://github.com/qwazwsx/infinite-campus#readme",
+  "homepage": "https://github.com/sbalbale/infinite-campus-API#readme",
   "dependencies": {
     "reqjs-err-handler": "^1.0.1",
     "request": "^2.88.0"

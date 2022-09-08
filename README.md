@@ -8,7 +8,7 @@
 ### Super easy to use!
 
 ```JavaScript
-const InfiniteCampus = require('infinite-campus')
+const InfiniteCampus = require('infinite-campus-api')
 // log in                          District Name    State  Username  Password
 const user = new InfiniteCampus('New York District', 'NY', 'JDoe12', 'XXXXXX')
 

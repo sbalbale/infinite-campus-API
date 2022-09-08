@@ -315,6 +315,9 @@ class User extends EventEmitter {
           }
 
           // loop over terms from /grades
+          if (!schoolIndex) {
+            schoolIndex = 0
+          }
           grades[schoolIndex].terms.forEach((term, i) => {
             let termResult = {
               name: term.termName,
@@ -370,33 +373,84 @@ class User extends EventEmitter {
             So now we look over the data from the /roster endpoint and use our cross reference object to add the missing data. We loop over the data (an array of courses) and check the class ID with our cross reference.
             That gives us a pointer into the result array so we can add the data in. We add class placement data into courses and check to see if we need to add term data (this is because the term object is included in every course)
           */
-
           // loop over classes from /roster
-          roster.forEach((course, i) => {
-            let placement = course.sectionPlacements[0]
+          
+          var resTemp = []
+          roster.forEach((course, i) => {            
+            var classSchedule = {}
+            course.sectionPlacements.forEach((placement) => {
+              if (!classSchedule[placement.courseName]) {
+                classSchedule[placement.courseName] = {}
+                classSchedule[placement.courseName][placement.termName] = {
+                  [placement.periodScheduleName] : placement.periodName
+                }}
+              else{
+                if (!classSchedule[placement.courseName][placement.termName]) {
+                  classSchedule[placement.courseName][placement.termName] = {
+                    [placement.periodScheduleName] : placement.periodName
+                }}
+                else {
+                  classSchedule[placement.courseName][placement.termName][placement.periodScheduleName]=placement.periodName
+                }
+              }
+            })
 
             // find course from cross reference
             let ref = crossReference[roster[i]._id]
             if (!ref) return
             let target = result[ref.i].courses[ref.ii]
-
+            /* Logging the first element of the array, which is the first object in the array. */
+            // console.log(classSchedule)
+            // console.log('###################')
+            // console.log(target)
+            // console.log('###################')
+            
             // add placement data
-            target.placement = {
-              periodName: placement.periodName,
-              periodSeq: placement.periodSequence,
-              startTime: placement.startTime,
-              endTime: placement.endTime
-            }
-
-            // // if the term doesn't have placement data associated with it
-            // if (result[ref.i].seq == null) {
-            //   console.log('AAA')
-            //   let term = result[ref.i]
-            //   term.seq = placement.term.seq
-            //   term.startDate = placement.term.startDate
-            //   term.endDate = placement.term.endDate
-            // }
+            target.placement = classSchedule
+            resTemp.push(target)
           })
+          result.forEach((terms) => {
+            var termName = terms.name
+            // console.log(terms)
+            terms.courses.forEach((course) => {
+              // console.log(resTemp)
+              resTemp.forEach((courseTemp) => {
+                if (courseTemp.name == course.name) {
+                  course.placement = courseTemp.placement[course.name][termName]
+                }
+              })
+              // course.placement = resTemp[course.name][termName]
+            })
+            
+          })
+          
+
+
+          // result.forEach((terms) => {
+          //   var termName = terms.name
+          //   resTemp.forEach((course) => {
+              
+          // //     // console.log(course)
+          //     if (course.placement[course.name][termName]) {
+          //       // console.log(course.name, termName, course.placement[course.name][termName])
+          //       terms.courses.forEach((course2) => {
+          //         if (course2.name == course.name) {
+          //           course2.placement = course.placement[course.name][termName]
+          //         }
+          //       // console.log(course2)
+          //       })
+                
+          //     }
+            // console.log(termName)
+            // terms.forEach((term) => {
+            //   console.log(term.name)
+            // })
+          // })
+
+
+          // result = resTemp
+          // console.log(result)
+
 
           resolve(result)
         })
